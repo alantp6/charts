@@ -61,15 +61,15 @@ entries:
     urls:
     - https://alantp6.github.io/charts/gpu-hog-0.1.0.tgz
     version: 0.1.0
-  nginx:
+  aws-nginx:
   - apiVersion: v1
     appVersion: "1.0"
     created: "2020-01-22T10:46:51.927950905Z"
     description: A Helm chart for Kubernetes
     digest: 3a32f53f91b42e8d5bc561db978091671484ca554e278850f33f93661718dd81
-    name: nginx
+    name: aws-nginx
     urls:
-    - https://alantp6.github.io/charts/nginx-0.1.5.tgz
+    - https://alantp6.github.io/charts/aws-ginx-0.1.5.tgz
     version: 0.1.5
   results-service:
   - apiVersion: v1
