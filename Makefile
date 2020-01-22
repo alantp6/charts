@@ -1,4 +1,4 @@
-IMAGE ?= quay.io/ligenvidia/charts-build:latest
+IMAGE ?= alantp6/charts-build:latest
 REPO_URL ?= "https://alantp6.github.io/charts"
 
 .PHONY: update-repo build-env package-all update-index build-shell publish
@@ -13,11 +13,11 @@ build-env:
 	docker build -t $(IMAGE) ./docker
 
 package-all:
-	docker run -it \
+	docker run -it --privileged \
 		-v `pwd`:/build \
 		-w /build \
 		$(IMAGE) \
-		./package_all
+		./package_all.sh
 
 update-index:
 	docker run -it --privileged \
@@ -25,7 +25,7 @@ update-index:
 		-w /build \
 		-e "repo_url=$(REPO_URL)" \
 		$(IMAGE) \
-		./update_index
+		./update_index.sh
 
 build-shell:
 	docker run -it --privileged \

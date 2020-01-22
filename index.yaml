@@ -3,82 +3,82 @@ entries:
   clara:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2019-12-11T22:52:47.400434783Z"
+    created: "2020-01-22T09:58:42.5435573Z"
     description: A Helm chart for Kubernetes
-    digest: 504b3ac2fe69b5660fda8f74179ad1fab4debbf24236b355201f6961f37e8f4d
+    digest: 946f19fa5749010ef6e98a17651ed7bef2ca257b7b99ae23a2e0d4748d284b2f
     name: clara
     urls:
-    - https://ligenvidia.github.io/charts/clara-0.0.1.tgz
+    - https://alantp6.github.io/charts/clara-0.0.1.tgz
     version: 0.0.1
   clara-renderer:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2019-12-11T22:52:47.400630303Z"
+    created: "2020-01-22T09:58:42.543771894Z"
     description: A helm chart for Clara Rendering Services. Included are a Renderer,
       UI and Dataset management service.
-    digest: 90bcd9be2380e4bae710ace788d5d0be30bc7166ac4eac8066980e08acd55880
+    digest: 75db132304509a6b5385df82746bf499272dd5df8631bddb86ce1f5168565de1
     name: clara-renderer
     urls:
-    - https://ligenvidia.github.io/charts/clara-renderer-0.1.0.tgz
+    - https://alantp6.github.io/charts/clara-renderer-0.1.0.tgz
     version: 0.1.0
   deepstream-4-egx:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2019-12-11T22:52:47.400843818Z"
+    created: "2020-01-22T09:58:42.544002428Z"
     description: A Helm chart for Kubernetes
-    digest: ac09438f8d122a840cb62f9321cb9117b740f236c19c20d57be8c829d7f48b48
+    digest: 3144b2b449c6847868d9fa0997221a51ca4a8570957e1fdfdfab245f430c581b
     name: deepstream-4-egx
     urls:
-    - https://ligenvidia.github.io/charts/deepstream-4-egx-0.1.0.tgz
+    - https://alantp6.github.io/charts/deepstream-4-egx-0.1.0.tgz
     version: 0.1.0
   egx-location:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2019-12-11T22:52:47.402504798Z"
+    created: "2020-01-22T09:58:42.545193756Z"
     description: A Helm chart for Atlas Monitoring Stack
-    digest: d132287fe2c56d58cfddaccbfea9553ffa0fe5dfaf6d5d2a745f752fe6b2a108
+    digest: 1c297bb20fd9f4bf5494b59c2eba8421783983622f6c671128245e04eb516131
     name: egx-location
     urls:
-    - https://ligenvidia.github.io/charts/egx-location-1.11.0.tgz
+    - https://alantp6.github.io/charts/egx-location-1.11.0.tgz
     version: 1.11.0
   gpu-hog:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2019-12-11T22:52:47.402643924Z"
+    created: "2020-01-22T09:58:42.545366648Z"
     description: A Helm chart to produce non-stopping gpu workload
-    digest: 30dfe65b7d07a7ecfc8c39cfa604833a213bebe843cfaf68de19052f8e29bb43
+    digest: a29ae8fcaf182d93f0dfb2d401486c0f7d9dbc9fac92384e01ddede1aad50d6e
     name: gpu-hog
     urls:
-    - https://ligenvidia.github.io/charts/gpu-hog-0.1.0.tgz
+    - https://alantp6.github.io/charts/gpu-hog-0.1.0.tgz
     version: 0.1.0
   nginx:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2019-12-11T22:52:47.402780489Z"
+    created: "2020-01-22T09:58:42.545534204Z"
     description: A Helm chart for Kubernetes
-    digest: d3acbebf54ee4e393a422a565355678ed5e98d22baa34e3cce8428fd23cb479a
+    digest: d8ee281da1335b96ab6f4f2f42c5cdbb271a776465cf5568572b87b7621df5f9
     name: nginx
     urls:
-    - https://ligenvidia.github.io/charts/nginx-0.1.5.tgz
+    - https://alantp6.github.io/charts/nginx-0.1.5.tgz
     version: 0.1.5
   results-service:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2019-12-11T22:52:47.402987347Z"
+    created: "2020-01-22T09:58:42.54581371Z"
     description: A Helm chart for the Results Service
-    digest: 45964e6a92e138e27b45760ebc8a671c4ac1da7390d5dbbbb0704a3402763d62
+    digest: 632af15bcfca3603176b6ecb87404d166f452e1b6b66b7ec027d606045f0ed6e
     name: results-service
     urls:
-    - https://ligenvidia.github.io/charts/results-service-0.1.0.tgz
+    - https://alantp6.github.io/charts/results-service-0.1.0.tgz
     version: 0.1.0
   robocop:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2019-12-11T22:52:47.403207223Z"
+    created: "2020-01-22T09:58:42.546052389Z"
     description: A Helm chart for Kubernetes
-    digest: cfe3f114de101386136627b789fc18dde69f6402a87ea661c5210eb3a665e022
+    digest: c2d08037980651f1f46480904432446af71a959d56387c6303998ca035ad1c04
     name: robocop
     urls:
-    - https://ligenvidia.github.io/charts/robocop-0.1.0.tgz
+    - https://alantp6.github.io/charts/robocop-0.1.0.tgz
     version: 0.1.0
-generated: "2019-12-11T22:52:47.397567493Z"
+generated: "2020-01-22T09:58:42.539409991Z"
