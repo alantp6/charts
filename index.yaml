@@ -57,7 +57,7 @@ entries:
     created: "2020-01-22T10:29:50.433434598Z"
     description: A Helm chart for Kubernetes
     digest: 3a32f53f91b42e8d5bc561db978091671484ca554e278850f33f93661718dd81
-    name: nginx
+    name: aws-nginx
     urls:
     - https://alantp6.github.io/charts/nginx-0.1.5.tgz
     version: 0.1.5
