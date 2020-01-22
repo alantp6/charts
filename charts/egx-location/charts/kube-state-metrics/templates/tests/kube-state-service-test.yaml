@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: {{ template "kube-state-metrics.fullname" . }}
+  name: {{ template "kube-state-metrics.fullname" . }}-verify-service
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  containers:
+  - name: {{ template "kube-state-metrics.fullname" . }}-verify-service
+    image: gempesaw/curl-jq
+    # The following test curls Grafana endpoint and verifies it is accessible.
+    args:
+      - "/bin/sh"
+      - "-c"
+      - |
+         curl -sG http://{{ template "kube-state-metrics.fullname" . }}:8080?pretty=true
+  restartPolicy: Never

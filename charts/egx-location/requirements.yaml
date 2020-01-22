@@ -1,0 +1,20 @@
+swngc-nvdc-helm: &swngc-nvdc-helm https://sc-hw-artf.nvidia.com/swngc-nvdc-helm
+
+dependencies:
+
+  - name: fluentd-ds
+    version: 1.*
+    repository: *swngc-nvdc-helm
+
+  - name: kube-state-metrics
+    version: 1.*
+    repository: *swngc-nvdc-helm
+
+  - name: prometheus-node-exporter
+    version: 1.*
+    repository: *swngc-nvdc-helm
+
+  - name: pushprox-client
+    version: 1.*
+    repository: *swngc-nvdc-helm
+

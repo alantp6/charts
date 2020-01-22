@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "deepstream-4-egx.fullname" . }}
+  labels:
+{{ include "deepstream-4-egx.labels" . | indent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+      nodePort: {{ .Values.service.nodePort }}
+  selector:
+    app.kubernetes.io/name: {{ include "deepstream-4-egx.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}

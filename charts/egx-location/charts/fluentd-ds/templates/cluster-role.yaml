@@ -1,0 +1,18 @@
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  name: {{ template "fluentd-ds.fullname" . }}-fluentd
+  labels:
+    app: {{ template "fluentd-ds.name" . }}
+    chart: {{ template "fluentd-ds.chart" . }}
+    release: {{ .Release.Name }}
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - namespaces
+  - pods
+  verbs:
+  - get
+  - list
+  - watch

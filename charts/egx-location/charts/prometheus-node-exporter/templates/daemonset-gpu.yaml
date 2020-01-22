@@ -1,0 +1,156 @@
+{{- if .Values.affinityGPU }}
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: {{ template "prometheus-node-exporter.fullname" . }}-gpu
+  labels: {{ include "prometheus-node-exporter.labels" . | indent 4 }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ template "prometheus-node-exporter.name" . }}
+      release: {{ .Release.Name }}
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: "{{ .Values.maxUnavailable }}"
+  template:
+    metadata:
+      labels: {{ include "prometheus-node-exporter.labels" . | indent 8 }}
+      # To enable systemd collector (NGCC-10316)
+      annotations:
+        container.apparmor.security.beta.kubernetes.io/node-exporter: unconfined
+    spec:
+{{- if and .Values.rbac.create .Values.serviceAccount.create }}
+      serviceAccountName: {{ template "prometheus-node-exporter.serviceAccountName" . }}
+{{- end }}
+{{- if .Values.priorityClassName }}
+      priorityClassName: {{ .Values.priorityClassName }}
+{{- end }}
+      {{- if .Values.image.pullSecrets }}
+      imagePullSecrets:
+      {{- range .Values.image.pullSecrets }}
+        - name: {{ . }}
+      {{- end}}
+      {{- end }}
+      containers:
+        - name: node-exporter
+          image: "{{ .Values.container.image.repository }}:{{ .Values.container.image.tag }}"
+          imagePullPolicy: "{{ .Values.container.image.pullPolicy }}"
+          args:
+            - --web.listen-address=0.0.0.0:{{ .Values.container.service.port }}
+        {{- if and .Values.container .Values.container.args }}
+{{ toYaml .Values.container.args | indent 12 }}
+          {{- end }}
+{{- if .Values.extraArgs }}
+{{ toYaml .Values.extraArgs | indent 12 }}
+{{- end }}
+          ports:
+            - name: metrics
+              containerPort: {{ .Values.container.service.targetPort }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.container.service.port }}
+          readinessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.container.service.port }}
+          resources:
+{{ toYaml .Values.container.resources | indent 12 }}
+        {{- if and .Values.container .Values.container.volumeMounts }}
+          volumeMounts:
+{{ toYaml .Values.container.volumeMounts | indent 12 }}
+            {{- if .Values.extraHostVolumeMounts }}
+            {{- range $_, $mount := .Values.extraHostVolumeMounts }}
+            - name: {{ $mount.name }}
+              mountPath: {{ $mount.mountPath }}
+              readOnly: {{ $mount.readOnly }}
+            {{- if $mount.mountPropagation }}
+              mountPropagation: {{ $mount.mountPropagation }}
+            {{- end }}
+            {{- end }}
+            {{- end }}
+        {{- end }}
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 65534
+        - name: nvidia-dcgm-exporter
+          image: "{{ .Values.containerDCGM.image.repository }}:{{ .Values.containerDCGM.image.tag }}"
+          imagePullPolicy: "{{ .Values.containerDCGM.image.pullPolicy }}"
+          securityContext:
+            runAsNonRoot: false
+            runAsUser: 0
+          volumeMounts:
+{{ toYaml .Values.container3DCP.volumeMounts | indent 10 }}
+        - name: pod-nvidia-gpu-metrics-exporter
+          image: "{{ .Values.dcgmPodExporterContainer.image.repository }}:{{ .Values.dcgmPodExporterContainer.image.tag }}"
+          imagePullPolicy: "{{ .Values.dcgmPodExporterContainer.image.pullPolicy }}"
+          securityContext:
+            runAsNonRoot: false
+            runAsUser: 0
+          volumeMounts:
+{{ toYaml .Values.dcgmPodExporterContainer.volumeMounts | indent 10 }}
+        {{- if .Values.fcacheExporterContainer.enabled }}
+        - name: nvidia-fscache-exporter
+          image: "{{ .Values.fcacheExporterContainer.image.repository }}:{{ .Values.fcacheExporterContainer.image.tag }}"
+          imagePullPolicy: {{ .Values.fcacheExporterContainer.image.pullPolicy }}
+          securityContext:
+            runAsNonRoot: false
+            runAsUser: 0
+          volumeMounts:
+{{ toYaml .Values.fcacheExporterContainer.volumeMounts | indent 10 }}
+        {{- end }}
+        {{- if .Values.pushProxyClient.enabled }}
+        - name: push-prox-client
+          image: "{{ .Values.pushProxyClient.image.repository }}:{{ .Values.pushProxyClient.image.tag }}"
+          imagePullPolicy: "{{ .Values.pushProxyClient.image.pullPolicy }}"
+          securityContext:
+            runAsNonRoot: false
+            runAsUser: 0
+          args:
+          - --proxy-url={{ required "pushProxyClient.proxyUrl" .Values.pushProxyClient.proxyUrl }}
+          - --fqdn=$(POD_NAME).$(SERVICE_NAME).$(NAMESPACE).svc.$(LOCATION_NAME)
+          env:
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          - name: SERVICE_NAME
+            value: {{ template "prometheus-node-exporter.fullname" . }}
+          - name: LOCATION_NAME
+            value: {{ required "locationName" .Values.locationName }}
+          - name: PORT
+            value: "{{ .Values.container.service.port }}"
+        {{- end }}
+      hostNetwork: true
+      hostPID: true
+      dnsPolicy: ClusterFirstWithHostNet
+      {{- if .Values.affinityGPU }}
+      affinity:
+{{ toYaml .Values.affinityGPU | indent 8 }}
+      {{- end }}
+      {{- if .Values.nodeSelectorGPU }}
+      nodeSelector:
+{{ toYaml .Values.nodeSelectorGPU | indent 8 }}
+      {{- end }}
+      {{- if .Values.tolerations }}
+      tolerations:
+{{ toYaml .Values.tolerations | indent 8 }}
+    {{- end }}
+      {{- if .Values.volumes }}
+      volumes:
+{{ toYaml .Values.volumes | indent 8 }}
+        {{- if .Values.extraHostVolumeMounts }}
+        {{- range $_, $mount := .Values.extraHostVolumeMounts }}
+        - name: {{ $mount.name }}
+          hostPath:
+            path: {{ $mount.hostPath }}
+        {{- end }}
+        {{- end }}
+      {{- end}}
+{{- end }}

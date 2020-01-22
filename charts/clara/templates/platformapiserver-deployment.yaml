@@ -1,0 +1,63 @@
+# Copyright (c) 2019, NVIDIA CORPORATION.  All rights reserved.
+#
+# NVIDIA CORPORATION and its licensors retain all intellectual property
+# and proprietary rights in and to this software, related documentation
+# and any modifications thereto.  Any use, reproduction, disclosure or
+# distribution of this software and related documentation without an express
+# license agreement from NVIDIA CORPORATION is strictly prohibited.
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-clara-platformapiserver
+  labels:
+    app: {{ .Release.Name }}-clara-platformapiserver
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  template:
+    metadata:
+      labels:
+        app: clara
+        name: apis
+        release: {{ .Release.Name }}
+    spec:
+    {{- with .Values.images.pullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      serviceAccountName: {{ .Values.platformapiserver.serviceAccount }}
+      volumes:
+        - name: {{ .Release.Name }}-{{ .Values.platformapiserver.name }}-storage
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-{{ .Values.platformapiserver.name }}-payload-volume-claim
+        - name: {{ .Release.Name }}-{{ .Values.platformapiserver.name }}-service-volume
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-{{ .Values.platformapiserver.name }}-service-volume-claim
+      containers:
+        - name: platformapiserver
+          image: "{{ .Values.images.namespace }}/{{ .Values.images.platformapiserver }}:{{ .Values.images.tag }}"
+          imagePullPolicy: IfNotPresent
+          # Note that the container's payload storage path currently must be the same as the
+          # host path, since any persistent volumes created for the Argo workflows must also
+          # point to the original host path.
+          args: [
+              "--storage", "disk:{{ .Values.platformapiserver.payloadService.hostVolumePath }}",
+              "--commonvolume", "{{ .Release.Name }}-{{ .Values.platformapiserver.name }}-common-volume-claim",
+              "--servicevolume", "disk:{{ .Values.platformapiserver.serviceVolume.hostVolumePath }}"]
+          env:
+          - name: CLARA_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          ports:
+          - name: plserver-port
+            containerPort: 50051
+            protocol: TCP
+          volumeMounts:
+            - mountPath: {{ .Values.platformapiserver.payloadService.hostVolumePath }}
+              name: {{ .Release.Name }}-{{ .Values.platformapiserver.name }}-storage
+            - mountPath: {{ .Values.platformapiserver.serviceVolume.hostVolumePath }}
+              name: {{ .Release.Name }}-{{ .Values.platformapiserver.name }}-service-volume

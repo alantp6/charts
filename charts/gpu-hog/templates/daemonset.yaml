@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: {{ include "gpu-hog.fullname" . }}
+  labels:
+{{ include "gpu-hog.labels" . | indent 4 }}
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "gpu-hog.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "gpu-hog.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      nodeSelector:
+        nodeType: gpu
+      terminationGracePeriodSeconds: 5
+      containers:
+      - image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        name: tf
+        command:
+        - "python"
+        - "-c"
+        - |
+          import torch
+          N = 2000
+          interval = 1000
+          device = torch.device('cuda')
+          x = torch.zeros(N, N, device=device).uniform_(-1.0, 1.0)
+          y = torch.zeros(N, N, device=device).uniform_(-1.0, 1.0)
+          count = 0
+          while True:
+            x.add_(y)
+            count = count +1
+            if count % interval == 0:
+              print(x)
+              x.uniform_(-1.0, 1.0)
+              y.uniform_(-1.0, 1.0)

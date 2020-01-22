@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "fluentd-ds.fullname" . }}-logging-config
+  labels:
+    k8s-app: {{ template "fluentd-ds.fullname" . }}
+    version: v1
+    app: {{ template "fluentd-ds.name" . }}
+    chart: {{ template "fluentd-ds.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+data:
+  fluentd.conf: |
+
+{{ .Values.fluentdConfig.sources | indent 4 }}
+{{- if .Values.influxdb.enabled }}
+{{ .Values.fluentdConfig.influxfilters | indent 4 }}
+{{ .Values.fluentdConfig.influxoutput | indent 4 }}
+{{- else }}
+{{ .Values.fluentdConfig.graylogfilters | indent 4 }}
+{{ .Values.fluentdConfig.graylogoutput | indent 4 }}
+{{- end }}

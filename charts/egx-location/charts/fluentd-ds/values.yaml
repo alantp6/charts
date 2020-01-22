@@ -1,0 +1,294 @@
+# Default values for fluentd-ds.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: quay.io/nvidia/fluentd-influxdb
+  tag: latest
+  pullPolicy: Always
+  secret: quayio-userpass
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: false
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  path: /
+  hosts:
+    - chart-example.local
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources:
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  limits:
+    cpu: 2
+    memory: 2Gi
+  requests:
+    cpu: 1
+    memory: 512Mi
+
+test:
+  image: gempesaw/curl-jq
+  influx:
+    host: influxdb
+    namespace: nsv-monitoring
+    port: 8086
+    dbname: logs
+
+influxdb:
+  enabled: false
+
+
+fluentdConfig:
+  # What to feed fluentd
+  sources: |
+
+    <source>
+      @type tail
+      <parse>
+        @type multiline
+        format_firstline /^\w+\s+\d+\s+\d{2}:\d{2}:\d{2}/  # No named groups, just regex to identify each new log.
+        format1 /^(?<datetime>\w+\s+\d+\s+\d{2}:\d{2}:\d{2})\s+(?<message>.*)/
+      </parse>
+      path /var/log/kern.log
+      pos_file /tmp/kern.log.pos
+      tag kern
+      @log_level error
+    </source>
+
+    <source>
+      @type tail
+      <parse>
+        @type multiline
+        format_firstline /^\w+\s+\d+\s+\d{2}:\d{2}:\d{2}/
+        format1 /^(?<datetime>\w+\s+\d+\s+\d{2}:\d{2}:\d{2})\s+(?<message>.*)/
+      </parse>
+      path /var/log/syslog
+      pos_file /tmp/syslog.log.pos
+      tag syslog
+      @log_level error
+    </source>
+
+    <source>
+      @type tail
+      <parse>
+        @type multiline
+        format_firstline /^\w+\s+\d+\s+\d{2}:\d{2}:\d{2}/
+        format1 /^(?<datetime>\w+\s+\d+\s+\d{2}:\d{2}:\d{2})\s+(?<message>.*)/
+      </parse>
+      path /var/log/auth.log
+      pos_file /tmp/auth.log.pos
+      tag auth
+      @log_level error
+    </source>
+
+    <source>
+      @type tail
+      <parse>
+        @type multiline
+        format_firstline /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d+\s+\w+/
+        format1 /^(?<datetime>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}),\d+ (?<event>[^ ]+)\s+\[\w+\]: (?<loglevel>[A-Z]+)\s+(?<message>.*)/
+      </parse>
+      path /var/log/fail2ban.log
+      pos_file /tmp/fail2ban.log.pos
+      tag fail2ban
+      @log_level error
+    </source>
+
+    <source>
+      @type tail
+      <parse>
+        @type multiline
+        format_firstline /^[A-Z]\d{4}\s+[0-9\:\.]+\s+/
+        format1 /^(?<loglevel>[A-Z])\d{4} (?<datetime>[0-9\:\.]+)\s+(?<pid>\d+)\s+(?<source>[^ \]]+)\] (?<message>.*)/
+      </parse>
+      path /var/log/kube-apiserver.log
+      pos_file /tmp/kube-apiserver.log.pos
+      tag kube-apiserver
+      @log_level error
+    </source>
+
+    <source>
+      @type tail
+      <parse>
+        @type multiline
+        format_firstline /^[A-Z]\d{4}\s+[0-9\:\.]+\s+/
+        format1 /^(?<loglevel>[A-Z])\d{4} (?<datetime>[0-9\:\.]+)\s+(?<pid>\d+)\s+(?<source>[^ \]]+)\] (?<message>.*)/
+      </parse>
+      path /var/log/kube-controller-manager.log
+      pos_file /tmp/kube-controller-manager.log.pos
+      tag kube-controller-manager
+      @log_level error
+    </source>
+
+    <source>
+      @type tail
+      <parse>
+        @type multiline
+        format_firstline /^{"log":.*}/
+        format1 /^{"log":"(?<message>.*)","stream":"(?<stream>.*)","time":"(?<datetime>[0-9\:\.\-TZ]+)"}/
+      </parse>
+      path /var/log/containers/kube-proxy**.log
+      pos_file /tmp/kube-proxy.log.pos
+      tag kube-proxy
+      @log_level error
+    </source>
+
+    <source>
+      @type tail
+      <parse>
+        @type multiline
+        format_firstline /^{"log":.*}/
+        format1 /^{"log":"(?<message>.*)","stream":"(?<stream>.*)","time":"(?<datetime>[0-9\:\.\-TZ]+)"}/
+      </parse>
+      path /var/log/containers/kube-scheduler**.log
+      pos_file /tmp/kube-scheduler.log.pos
+      tag kube-scheduler
+      @log_level error
+    </source>
+
+    <source>
+      @type tail
+      <parse>
+        @type multiline
+        format_firstline /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}.\d+\s+\w/
+        format1 /^(?<datetime>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}).\d+ (?<loglevel>[A-Z]) \| (?<source>[a-zA-Z0-9]+): (?<message>.*)/
+      </parse>
+      path /var/log/etcd.log
+      pos_file /tmp/etcd.log.pos
+      tag etcd
+      @log_level error
+    </source>
+
+    <source>
+      @type tail
+      <parse>
+        @type multiline
+        format_firstline /^{"kind":"\w+/
+        format1 /^{(?<message>.*)}/
+      </parse>
+      path /var/log/kubernetes/audit/kube-apiserver-audit.log
+      pos_file /tmp/kube-apiserver-audit.pos
+      tag kube-apiserver-audit
+      @log_level error
+    </source>
+
+    # Prometheus Logs
+    <source>
+      @type tail
+      <parse>
+        @type multiline
+        format_firstline /^{"log":.*}/
+        format1 /^{"log":"level=(?<level>\w+)\s+(?<message>.*)","stream":"(?<stream>.*)","time":"(?<datetime>[0-9\:\.\-TZ]+)"}/
+      </parse>
+      path /var/log/containers/prometheus**.log
+      pos_file /tmp/prometheus.log.pos
+      tag prometheus
+      @log_level error
+    </source>
+
+  # How to process the stream
+  influxfilters: |
+
+    # This filter modifies the record to add namespace, pod and container name.
+    # This fields will be used by next filter to lookup k8s metadata from API server.
+    <filter **>
+      @type record_transformer
+      enable_ruby true
+      auto_typecast true
+      <record>
+        docker ${{"container_id" => "dummy"}}
+        kubernetes ${{"namespace_name" => "nsv-monitoring", "pod_name" => hostname, "container_name" => "fluentd-ds" }}
+      </record>
+    </filter>
+
+    # This filter will add all the relevant k8s metadata, along with pod manifest labels.
+    # Refer docs: https://github.com/fabric8io/fluent-plugin-kubernetes_metadata_filter
+    <filter **>
+      @type kubernetes_metadata
+    </filter>
+
+    # This filter flattens the nested json, so that it can be consumed by Influxdb.
+    # Refer docs: https://github.com/kazegusuri/fluent-plugin-flatten-hash
+    <filter **>
+      @type flatten_hash
+      separator .
+    </filter>
+
+    # This filter is for cleaning up the "container_id: dummy" field added in first filter.
+    <filter **>
+      @type record_transformer
+      remove_keys docker.container_id
+    </filter>
+
+  graylogfilters: |
+
+    # This filter modifies the record to add namespace, pod and container name.
+    # This fields will be used by next filter to lookup k8s metadata from API server.
+    <filter **>
+      @type record_transformer
+      enable_ruby true
+      auto_typecast true
+      <record>
+        docker ${{"container_id" => "dummy"}}
+        kubernetes ${{"namespace_name" => "nsv-monitoring", "pod_name" => hostname, "container_name" => "fluentd-ds" }}
+      </record>
+    </filter>
+
+    # This filter will add all the relevant k8s metadata, along with pod manifest labels.
+    # Refer docs: https://github.com/fabric8io/fluent-plugin-kubernetes_metadata_filter
+    <filter **>
+      @type kubernetes_metadata
+    </filter>
+
+    # This filter is for cleaning up the "container_id: dummy" field added in first filter.
+    <filter **>
+      @type record_transformer
+      remove_keys docker
+    </filter>
+
+  # Where to send the logs
+  influxoutput: |
+
+    <match **>
+      @type influxdb
+      <buffer>
+        @type file
+        path /tmp/fluentd
+        flush_interval 5
+      </buffer>
+      host  influxdb-relay.nsv-monitoring
+      port  9096
+      dbname logs
+      user  logs-user
+      password logs-passwd
+      verify_ssl false
+      time_precision ns
+      sequence_tag _seq
+    </match>
+
+  graylogoutput: |
+
+    <match **>
+      @type gelf
+      host "graylog-udp.nsv-monitoring"
+      port 12201
+      protocol "udp"
+      buffer_chunk_limit 4096K   # The size of each buffer chunk
+      buffer_queue_limit 512     # The length limit of the chunk queue.
+      flush_interval 5s
+      max_retry_wait 30
+      num_threads 4
+    </match>

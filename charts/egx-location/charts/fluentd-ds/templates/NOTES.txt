@@ -1,0 +1,20 @@
+=============================================================
+================ Fluentd Daemonset Deployed =================
+
+Fluentd pod should be running on all Nodes currently.
+It will tail the following system and kubernetes logs and push them to
+configurable logging backend.
+
+1. /var/log/kern.log
+2. /var/log/syslog
+3. /var/log/auth.log
+4. /var/log/fail2ban.log
+5. /var/log/kube-apiserver.log
+6. /var/log/kube-controller-manager.log
+7. /var/log/kube-proxy.log
+8. /var/log/kube-scheduler.log
+9. /var/log/etcd.log
+10. /var/log/kube-apiserver-audit.log
+
+Happy Logging!
+=============================================================

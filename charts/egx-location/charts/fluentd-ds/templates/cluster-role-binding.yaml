@@ -1,0 +1,18 @@
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: {{ template "fluentd-ds.fullname" . }}-fluentd
+  labels:
+    app: {{ template "fluentd-ds.name" . }}
+    chart: {{ template "fluentd-ds.chart" . }}
+    release: {{ .Release.Name }}
+roleRef:
+  kind: ClusterRole
+  name: {{ template "fluentd-ds.fullname" . }}-fluentd
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+- kind: ServiceAccount
+  name: {{ template "fluentd-ds.fullname" . }}-fluentd
+  # This namespace setting will limit fluentd to watching/listing/getting pods
+  # in the given namespace.
+  namespace: {{ .Release.Namespace }}

@@ -1,0 +1,31 @@
+# Copyright (c) 2019, NVIDIA CORPORATION.  All rights reserved.
+#
+# NVIDIA CORPORATION and its licensors retain all intellectual property
+# and proprietary rights in and to this software, related documentation
+# and any modifications thereto.  Any use, reproduction, disclosure or
+# distribution of this software and related documentation without an express
+# license agreement from NVIDIA CORPORATION is strictly prohibited.
+
+# Default values for results-service.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: resultsservice
+  labels:
+    app.kubernetes.io/name: {{ include "results-service.name" . }}
+    helm.sh/chart: {{ include "results-service.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  type: {{ .Values.resultsService.serviceType }}
+  ports:
+    - name: "http"
+      port: 80
+      targetPort: 80
+      protocol: TCP
+  selector:
+    app.kubernetes.io/name: {{ include "results-service.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}

@@ -1,0 +1,88 @@
+prometheus-node-exporter:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: nodeType
+            operator: DoesNotExist
+  fcacheExporterContainer:
+    enabled: false
+
+  affinityGPU:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: nodeType
+            operator: In
+            values:
+            - gpu
+
+  extraArgs:
+    - --no-collector.bcache
+    - --no-collector.arp
+    - --no-collector.bonding
+    - --no-collector.conntrack
+    - --no-collector.edac
+    - --no-collector.entropy
+    - --no-collector.filefd
+    - --no-collector.hwmon
+    - --no-collector.infiniband
+    - --no-collector.ipvs
+    - --no-collector.mdadm
+    - --no-collector.stat
+    - --no-collector.timex
+    - --no-collector.vmstat
+    - --no-collector.xfs
+    - --no-collector.zfs
+
+  # EGX settings:
+  locationName: "loc1"
+  pushProxyClient:
+    enabled: true
+    image:
+      repository: quay.io/ligenvidia/pushprox-client
+      tag: "1.0"
+      pullPolicy: Always
+    proxyUrl: "http://pushprox.mon.nvidia-egx.com/"
+
+pushprox-client:
+  proxy:
+    url: http://pushprox.mon.nvidia-egx.com/
+    exposedServices:
+    - namespace: nsv-monitoring
+      name: edge-monitoring-kube-state-metrics
+      port: "8080"
+
+kube-state-metrics:
+  service:
+    port: 8080
+    type: ClusterIP
+    hostPort: 30000
+    targetPort: 8080
+  image:
+    containerPort: 8080
+
+fluentd-ds:
+  image:
+    repository: quay.io/nvidia/fluentd-atlas-log
+    tag: "1.0"
+    pullPolicy: Always
+    secret: quayio-userpass
+
+  fluentdConfig:
+    graylogoutput: |
+
+      <match **>
+        @type http
+        endpoint "http://graylog-http.mon.nvidia-egx.com/gelf"
+        open_timeout 2
+        tls_verify_mode none
+        <format>
+          @type "json"
+        </format>
+        <buffer>
+          flush_interval 10s
+        </buffer>
+      </match>

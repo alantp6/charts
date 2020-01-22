@@ -1,0 +1,17 @@
+
+images:
+  namespace: clara
+  renderserver: renderserver_ng
+  datasetservice: clara-datasetservice
+  renderui: clara-dashboard
+  tag: latest
+  pullPolicy: IfNotPresent
+  pullSecrets: {} 
+
+rsds:
+  storage: 10Gi
+  hostDatasetPath: "/clara-io/datasets"
+  enableDatasetListener: "TRUE"
+  agentName: "renderserver"
+  pullInterval: "5"
+  retryLimit: "5"
