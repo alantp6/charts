@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "aws-nginx.fullname" . }}
+  name: {{ include "nginx.fullname" . }}
   labels:
-{{ include "aws-nginx.labels" . | indent 4 }}
+{{ include "nginx.labels" . | indent 4 }}
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "aws-nginx.name" . }}
+      app.kubernetes.io/name: {{ include "nginx.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: {{ include "aws-nginx.name" . }}
+        app.kubernetes.io/name: {{ include "nginx.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
       replicas: {{ .Values.replicaCount }}
