@@ -13,22 +13,22 @@ build-env:
 	docker build -t $(IMAGE) ./docker
 
 package-all:
-	docker run -it --privileged \
+	docker run -it \
 		-v `pwd`:/build \
 		-w /build \
 		$(IMAGE) \
-		./package_all.sh
+		./package_all
 
 update-index:
-	docker run -it --privileged \
+	docker run -it \
 		-v `pwd`:/build \
 		-w /build \
 		-e "repo_url=$(REPO_URL)" \
 		$(IMAGE) \
-		./update_index.sh
+		./update_index
 
 build-shell:
-	docker run -it --privileged \
+	docker run -it \
 		-v `pwd`:/build \
 		-w /build \
 		$(IMAGE) \
