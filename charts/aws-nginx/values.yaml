@@ -1,0 +1,5 @@
+nodePort: "31000"
+background: "red"
+title: "DeepStream APP with FederatedHelmRelease"
+content: "hello world"
+replicaCount: 1
