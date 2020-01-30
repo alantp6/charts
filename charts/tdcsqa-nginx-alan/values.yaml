@@ -1,0 +1,4 @@
+nodePort: "31003"
+background: "green"
+title: "Nginx alan test application"
+content: "hello world"

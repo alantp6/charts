@@ -3,28 +3,19 @@ entries:
   aws-nginx:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-01-30T09:17:01.932452165Z"
+    created: "2020-01-30T09:23:26.268062992Z"
     description: A Helm chart for Kubernetes
-    digest: aeb00ed75385282475791f3be7bd7fefa1836bd0cbb308af77d3b721402eda2a
+    digest: 02bd1bd67b7610557d229afa09545efc5f24638361b02687f8bdcac267d7a453
     name: aws-nginx
     urls:
     - https://alantp6.github.io/charts/aws-nginx-0.2.0.tgz
     version: 0.2.0
-  - apiVersion: v1
-    appVersion: "1.0"
-    created: "2020-01-30T09:17:01.932621042Z"
-    description: A Helm chart for Kubernetes
-    digest: 5354325f804483294b22e36ad42f7d30a8f3bd09a475bbdf9406910588587a0e
-    name: aws-nginx
-    urls:
-    - https://alantp6.github.io/charts/aws-nginx-0.2.tgz
-    version: "0.2"
   clara:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-01-30T09:17:01.935857324Z"
+    created: "2020-01-30T09:23:26.271369093Z"
     description: A Helm chart for Kubernetes
-    digest: b684929266efea64455795d2b443f7e492e3ba604f0201fc7e6be8ae9ee72243
+    digest: d716d2970424a25bced27bd7d9eeed190f1129c7a5cdbe2a0b5c0f7f9de2c759
     name: clara
     urls:
     - https://alantp6.github.io/charts/clara-0.0.1.tgz
@@ -32,10 +23,10 @@ entries:
   clara-renderer:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-01-30T09:17:01.936086089Z"
+    created: "2020-01-30T09:23:26.271595416Z"
     description: A helm chart for Clara Rendering Services. Included are a Renderer,
       UI and Dataset management service.
-    digest: 8617869027990ef99031d3e2824a67f3cb9cf5bc1407c56bf20dbf852917aa64
+    digest: 8f2c26c82f0227e8fffb5c8352149b004430a1ab873fe226aca7383fac4a035c
     name: clara-renderer
     urls:
     - https://alantp6.github.io/charts/clara-renderer-0.1.0.tgz
@@ -43,9 +34,9 @@ entries:
   deepstream-4-egx:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-01-30T09:17:01.936344009Z"
+    created: "2020-01-30T09:23:26.271869818Z"
     description: A Helm chart for Kubernetes
-    digest: 1e2adb97e2e575eacba1a87852a1a0fbaa2fdff985e99f2c9f86f76499cff105
+    digest: 4875b4e5a85ff45c1c27bca8cbcc77639aa5018c8f009f5b079ea79dd21f1a79
     name: deepstream-4-egx
     urls:
     - https://alantp6.github.io/charts/deepstream-4-egx-0.1.0.tgz
@@ -53,9 +44,9 @@ entries:
   egx-location:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-01-30T09:17:01.938584768Z"
+    created: "2020-01-30T09:23:26.273986536Z"
     description: A Helm chart for Atlas Monitoring Stack
-    digest: 5091ec96b0ed85aebf876180d0a730e80847549fd710444b35930268a9e68b83
+    digest: 6fdd150ab8414cac8def7a933f9323103d02caba054d964bd0377f88d9def225
     name: egx-location
     urls:
     - https://alantp6.github.io/charts/egx-location-1.11.0.tgz
@@ -63,9 +54,9 @@ entries:
   gpu-hog:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-01-30T09:17:01.938778295Z"
+    created: "2020-01-30T09:23:26.274226518Z"
     description: A Helm chart to produce non-stopping gpu workload
-    digest: af060da6c9757b790d7ca2b68cfd1b43b69894a99c229c067872a7184d2f6e29
+    digest: 432f3ee2930909dd02c585f5950b42a57c45e9fe32e8215a04e0fe529598d58b
     name: gpu-hog
     urls:
     - https://alantp6.github.io/charts/gpu-hog-0.1.0.tgz
@@ -73,9 +64,9 @@ entries:
   nginx:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-01-30T09:17:01.938944409Z"
+    created: "2020-01-30T09:23:26.274503698Z"
     description: A Helm chart for Kubernetes
-    digest: e8136ce82e607abb729e30b838d07873e4ce21ba9cac1f7b1c51c53e1470b88f
+    digest: 992baaebf169fab812e9a2bd133a13be355b6eeb3493c09278e71dc7dd5d8ac4
     name: nginx
     urls:
     - https://alantp6.github.io/charts/nginx-0.1.5.tgz
@@ -83,9 +74,9 @@ entries:
   results-service:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-01-30T09:17:01.939188778Z"
+    created: "2020-01-30T09:23:26.274765552Z"
     description: A Helm chart for the Results Service
-    digest: f15640ee382840e59fa982223f27183e6d4a9a5e056eaec5658d0be37d44c9f6
+    digest: 442696869235184dd411cc9c8be40e0d779cd460d7dbb80f9db76b55f874c438
     name: results-service
     urls:
     - https://alantp6.github.io/charts/results-service-0.1.0.tgz
@@ -93,11 +84,21 @@ entries:
   robocop:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-01-30T09:17:01.93942147Z"
+    created: "2020-01-30T09:23:26.274994592Z"
     description: A Helm chart for Kubernetes
-    digest: dbc94e42cd7158e433b2fa4acb8b6279434c0568252aec04b617d0f4635bac4b
+    digest: 1f481bded978e8f118a337f32998f34ecf595e7a7ef8e0cbe6847b1a8680dc4c
     name: robocop
     urls:
     - https://alantp6.github.io/charts/robocop-0.1.0.tgz
     version: 0.1.0
-generated: "2020-01-30T09:17:01.932101894Z"
+  tdcsqa-nginx-alan:
+  - apiVersion: v1
+    appVersion: "1.0"
+    created: "2020-01-30T09:23:26.275175219Z"
+    description: A Helm chart for Kubernetes
+    digest: 9f30d1face3d28931a1a5c3f1a13360847c1c74b780613b6d823113454a86402
+    name: tdcsqa-nginx-alan
+    urls:
+    - https://alantp6.github.io/charts/tdcsqa-nginx-alan-0.0.1.tgz
+    version: 0.0.1
+generated: "2020-01-30T09:23:26.267742617Z"
