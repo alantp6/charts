@@ -3,9 +3,9 @@ entries:
   clara:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-01-22T11:26:35.265029814Z"
+    created: "2020-01-30T07:04:52.60810507Z"
     description: A Helm chart for Kubernetes
-    digest: 7bede42acc131a27e982f8e2e0c86073ef7611c437a497890ead9bacb87ea3b9
+    digest: ef0feed1be1feb8892059e144f14bdc2d49a7d056b7f91ee90bd60786b4ff58b
     name: clara
     urls:
     - https://alantp6.github.io/charts/clara-0.0.1.tgz
@@ -13,10 +13,10 @@ entries:
   clara-renderer:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-01-22T11:26:35.265250762Z"
+    created: "2020-01-30T07:04:52.608332466Z"
     description: A helm chart for Clara Rendering Services. Included are a Renderer,
       UI and Dataset management service.
-    digest: 67f17196669a443093974e6cbf1d3c5d0a28e676887b996bbc453ed309edc6cc
+    digest: 8894acfbae36e50a461683df7e79670083fd02f345326ebd2be14fb3e53d00f4
     name: clara-renderer
     urls:
     - https://alantp6.github.io/charts/clara-renderer-0.1.0.tgz
@@ -24,9 +24,9 @@ entries:
   deepstream-4-egx:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-01-22T11:26:35.265502702Z"
+    created: "2020-01-30T07:04:52.608586386Z"
     description: A Helm chart for Kubernetes
-    digest: 1ff8f5f80d4f81dd4bdfc53ee5f48d31203d52b99935b6236104c614bf6fe386
+    digest: 64ce13ded194171a0115b266202a8a748625171189090b9b59caa1d2f5d806ed
     name: deepstream-4-egx
     urls:
     - https://alantp6.github.io/charts/deepstream-4-egx-0.1.0.tgz
@@ -34,9 +34,9 @@ entries:
   egx-location:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-01-22T11:26:35.266844426Z"
+    created: "2020-01-30T07:04:52.609893189Z"
     description: A Helm chart for Atlas Monitoring Stack
-    digest: 54a95e68ecb348bd7ebe02a27c86d08fa67a43eeb485bd63e4acff803a3f5b61
+    digest: b32ab97402080f602303af8f3559f579119964f228fbe7d543f421e82987f654
     name: egx-location
     urls:
     - https://alantp6.github.io/charts/egx-location-1.11.0.tgz
@@ -44,9 +44,9 @@ entries:
   gpu-hog:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-01-22T11:26:35.267011817Z"
+    created: "2020-01-30T07:04:52.610065583Z"
     description: A Helm chart to produce non-stopping gpu workload
-    digest: 4d220fa46fe2fd430699ba92afe0821a2e6431d5b5cd6b0ba06ad6695431d903
+    digest: 4a6a9d68735efb3b056b330f791f6f833a8e878b32fb224c524cb3208ce1efd4
     name: gpu-hog
     urls:
     - https://alantp6.github.io/charts/gpu-hog-0.1.0.tgz
@@ -54,7 +54,16 @@ entries:
   nginx:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-01-22T11:26:35.267182129Z"
+    created: "2020-01-30T07:04:52.610801249Z"
+    description: A Helm chart for Kubernetes
+    digest: 5a5912f136a457b3888e5cf3215003fe46eeef55b5d36e4279c2db118106fadd
+    name: nginx
+    urls:
+    - https://alantp6.github.io/charts/nginx-0.2.tgz
+    version: "0.2"
+  - apiVersion: v1
+    appVersion: "1.0"
+    created: "2020-01-30T07:04:52.61055384Z"
     description: A Helm chart for Kubernetes
     digest: e131e0f791b5819820417277cd116ffa47e186e75cf82c0415650bbc6be6f5f5
     name: nginx
@@ -64,9 +73,9 @@ entries:
   results-service:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-01-22T11:26:35.267445111Z"
+    created: "2020-01-30T07:04:52.611135032Z"
     description: A Helm chart for the Results Service
-    digest: 8bb8cd919b9cd64f5d2fb6104b81757b6604ed499b2e4fd303fbaa7e6dc5cb1d
+    digest: 6ac87226dc869d96b1aedcb4001a2a97dbd78b2b1e537fbe68147e229b64c715
     name: results-service
     urls:
     - https://alantp6.github.io/charts/results-service-0.1.0.tgz
@@ -74,11 +83,11 @@ entries:
   robocop:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-01-22T11:26:35.267983018Z"
+    created: "2020-01-30T07:04:52.611464661Z"
     description: A Helm chart for Kubernetes
-    digest: b95674ffabb16f01a9516ca66cd16ef7dd22690747f348f292af6a797ffacadc
+    digest: 3f5e7c9df76c32eb06112a8bae7cbddd418d0b9cc9c134e38c6c12a418f5871f
     name: robocop
     urls:
     - https://alantp6.github.io/charts/robocop-0.1.0.tgz
     version: 0.1.0
-generated: "2020-01-22T11:26:35.261622957Z"
+generated: "2020-01-30T07:04:52.604662964Z"
