@@ -3,5 +3,5 @@ images:
   name: cuda_test
   tag: 0.1.0
   pullPolicy: Always
-  pullSecrets: nvcrregistrykey
-  restartPolicy: Never
+pullSecrets: nvcrregistrykey
+restartPolicy: Never
