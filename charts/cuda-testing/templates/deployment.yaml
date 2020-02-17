@@ -5,7 +5,7 @@
 # license agreement from NVIDIA CORPORATION is strictly prohibited.
 
 apiVersion: apps/v1
-kind: Deployment
+kind: Job
 metadata:
   name: {{ include "cuda-testing.fullname" . }}
   labels:
