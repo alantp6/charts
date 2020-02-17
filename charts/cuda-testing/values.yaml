@@ -1,7 +1,7 @@
 images:
-  namespace: nvcr.io/nvidian
+  namespace: docker.io/nvswqa
   name: cuda_test
   tag: 0.1.0
   pullPolicy: Always
-pullSecrets: nvcrregistrykey
+pullSecrets: 
 restartPolicy: Never
