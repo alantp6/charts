@@ -1,0 +1,19 @@
+# NVIDIA CORPORATION and its licensors retain all intellectual property
+# and proprietary rights in and to this software, related documentation
+# and any modifications thereto.  Any use, reproduction, disclosure or
+# distribution of this software and related documentation without an express
+# license agreement from NVIDIA CORPORATION is strictly prohibited.
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ include "cuda-testing.fullname" . }}
+  labels:
+{{ include "cuda-testing.labels" . | indent 4 }}
+spec:
+  imagePullSecrets: {{ .Values.images.pullSecrets }}
+  containers:
+  - name: {{ .Chart.Name }}
+    image: "{{ .Values.images.namespace }}/{{ .Values.images.name }}:{{ .Values.images.tag }}"
+    imagePullPolicy: {{ .Values.images.pullPolicy }}
+  restartPolicy: Never
