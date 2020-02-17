@@ -1,5 +1,5 @@
 images:
-  namespace: docker.io/nvswqa
+  namespace: nvswqa
   name: cuda_test
   tag: 0.1.0
   pullPolicy: Always
