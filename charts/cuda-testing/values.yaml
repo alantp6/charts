@@ -1,6 +1,6 @@
 images:
   namespace: nvcr.io/nvidian
   name: cuda_test
-  tag: latest
+  tag: 0.1.0
   pullPolicy: IfNotPresent
   pullSecrets: {} 
