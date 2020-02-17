@@ -12,9 +12,9 @@ metadata:
 {{ include "cuda-testing.labels" . | indent 4 }}
 spec:
   containers:
-  - name: {{ .Chart.Name }}
-    image: "{{ .Values.images.namespace }}/{{ .Values.images.name }}:{{ .Values.images.tag }}"
-    imagePullPolicy: {{ .Values.images.pullPolicy }}
+    - name: {{ .Chart.Name }}
+      image: "{{ .Values.images.namespace }}/{{ .Values.images.name }}:{{ .Values.images.tag }}"
+      imagePullPolicy: {{ .Values.images.pullPolicy }}
   imagePullSecrets:
     - name: {{ .Values.images.pullSecrets }}
   restartPolicy: {{ .Values.images.restartPolicy }}
