@@ -16,5 +16,5 @@ spec:
       image: "{{ .Values.images.namespace }}/{{ .Values.images.name }}:{{ .Values.images.tag }}"
       imagePullPolicy: {{ .Values.images.pullPolicy }}
   imagePullSecrets:
-    - name: {{ .Values.pullSecrets }}
+    - name: nvcrregistrykey
   restartPolicy: {{ .Values.restartPolicy }}
