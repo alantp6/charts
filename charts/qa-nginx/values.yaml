@@ -1,0 +1,5 @@
+nodePort: "31002"
+background: "yellow"
+title: "NGINX Testing with HelmRelease"
+content: "hell world"
+replicaCount: 1
